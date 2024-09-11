@@ -40,27 +40,17 @@ export class AppComponent implements OnInit {
 
 
   //task 2
-  clicks$!: Observable<ClickEvent>;
-  timer$!: Observable<number>;
   combined$!: Observable<CombinedEvent>;
 
-  lastClick: CombinedEvent | null = null;
-
   ngOnInit(): void {
-    this.clicks$ = fromEvent<MouseEvent>(document, 'click').pipe(
-      map(event => ({ x: event.clientX, y: event.clientY }))
-    );
+    const timer$ = interval(1000);
 
-    this.timer$ = interval(1000);
-
-    this.combined$ = this.clicks$.pipe(
-      withLatestFrom(this.timer$),
+    this.combined$ = fromEvent<MouseEvent>(document, 'click').pipe(
+      map(event => ({ x: event.clientX, y: event.clientY })),
+      withLatestFrom(timer$),
       map(([click, time]) => ({ ...click, time }))
     );
 
-    this.combined$.subscribe(event => {
-      this.lastClick = event;
-    });
   }
 
 }

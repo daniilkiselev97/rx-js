@@ -1,4 +1,4 @@
-<div *ngIf="lastClick">
+<div *ngIf="combined$ | async as lastClick">
   <p>Координаты клика: ({{ lastClick.x }}, {{ lastClick.y }})</p>
   <p>Текущее значение таймера: {{ lastClick.time }}</p>
 </div>
