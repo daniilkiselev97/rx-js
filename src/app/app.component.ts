@@ -91,18 +91,18 @@ export class AppComponent implements OnInit {
   // }
 
   //task 4
-  result$!: Observable<string>;
+//   result$!: Observable<string>;
 
-  ngOnInit(): void {
-    this.result$ = fromEvent<MouseEvent>(document, 'click').pipe(
-      throttleTime(2000), 
-      switchMap(() => timer(0, 2000).pipe( 
-        takeUntil(timer(5000)) 
-      )),
-      map(() => `Клик зарегистрирован в ${new Date().toLocaleTimeString()}`), 
-      startWith('Ожидание кликов...') 
-    );
-  }
-}
+//   ngOnInit(): void {
+//     this.result$ = fromEvent<MouseEvent>(document, 'click').pipe(
+//       throttleTime(2000), 
+//       switchMap(() => timer(0, 2000).pipe( 
+//         takeUntil(timer(5000)) 
+//       )),
+//       map(() => `Клик зарегистрирован в ${new Date().toLocaleTimeString()}`), 
+//       startWith('Ожидание кликов...') 
+//     );
+//   }
+// }
 
 
