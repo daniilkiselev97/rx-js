@@ -1,4 +1,22 @@
-<div *ngIf="combined$ | async as lastClick">
+<!-- <div *ngIf="combined$ | async as lastClick">
   <p>Координаты клика: ({{ lastClick.x }}, {{ lastClick.y }})</p>
   <p>Текущее значение таймера: {{ lastClick.time }}</p>
+</div> -->
+
+<!-- <div *ngIf="data$ | async as data">
+  <p *ngFor="let value of data">
+    Удвоенное значение: {{ value }}
+  </p>
+</div> -->
+
+<div>
+  <p *ngIf="result$ | async as result">
+    Эмитированное значение: {{ result }}
+  </p>
 </div>
+
+
+
+
+
+
