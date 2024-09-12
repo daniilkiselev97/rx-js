@@ -23,23 +23,23 @@ interface CombinedEvent {
 })
 export class AppComponent implements OnInit {
   //task 1
-  public source$!: Observable<string>;
-  public testString: string = 'test';
+//   public source$!: Observable<string>;
+//   public testString: string = 'test';
 
-  ngOnInit(): void {
-    this.source$ = interval(1000).pipe(
-      switchMap((value) => {
-        if (value % 2 === 0) {
-          return timer(0, 500).pipe(map(() => this.testString + value));
-        } else {
-          return timer(500, 500).pipe(map(() => this.testString + value));
-        }
-      })
-    );
+//   ngOnInit(): void {
+//     this.source$ = interval(1000).pipe(
+//       switchMap((value) => {
+//         if (value % 2 === 0) {
+//           return timer(0, 500).pipe(map(() => this.testString + value));
+//         } else {
+//           return timer(500, 500).pipe(map(() => this.testString + value));
+//         }
+//       })
+//     );
 
-    this.source$.subscribe((res)=>console.log(res));
-  }
-}
+//     this.source$.subscribe((res)=>console.log(res));
+//   }
+// }
 
 
 
@@ -60,40 +60,41 @@ export class AppComponent implements OnInit {
 
 
   //task 3
-  // data$!: Observable<number[]>;
+  data$!: Observable<number[]>;
 
-  // ngOnInit(): void {
-  //   const rawData$: Observable<number> = this.simulateDataStream();
+  ngOnInit(): void {
+    const rawData$: Observable<number> = this.simulateDataStream();
 
-  //   this.data$ = rawData$.pipe(
-  //     tap((res) => console.log('before map:', res)),
-  //     map(value => [value * 2]),
-  //     startWith([]),
-  //     catchError(err => {
-  //       console.error('Error occurred:', err); 
-  //       return of([-2]); 
-  //     }),
-  //     scan((acc: number[], curr: number[]) => {
-  //       console.log('acc:', acc)
-  //       console.log('curr:', curr)
-  //       return acc.concat(curr)
-  //     }),
-  //   );
-  // }
+    this.data$ = rawData$.pipe(
+      tap((res) => console.log('before map:', res)),
+      map(value => [value * 2]),
+      startWith([]),
+      catchError(err => {
+        console.error('Error occurred:', err); 
+        return of([-2]); 
+      }),
+      scan((acc: number[], curr: number[]) => {
+        console.log('acc:', acc)
+        console.log('curr:', curr)
+        return acc.concat(curr)
+      }),
+    );
+  }
 
-  // simulateDataStream(): Observable<number> {
-  //   const values = [1, 2, 3, 4, 5];
+  simulateDataStream(): Observable<number> {
+    const values = [1, 2, 3, 4, 5];
 
-  //   return of(...values).pipe(
-  //     concatMap((val, index) => {
-  //       if (index === 3) {
-  //         return throwError(() => new Error('Ошибка на индексе 3')).pipe(delay(1000));
-  //       }
-  //       console.log('val:', val)
-  //       return of(val).pipe(delay(1000));
-  //     }),
-  //   );
-  // }
+    return of(...values).pipe(
+      concatMap((val, index) => {
+        if (index === 3) {
+          return throwError(() => new Error('Ошибка на индексе 3')).pipe(delay(1000));
+        }
+        console.log('val:', val)
+        return of(val).pipe(delay(1000));
+      }),
+    );
+  }
+}
 
   //task 4
   //   result$!: Observable<string>;
