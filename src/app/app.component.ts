@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { catchError, concat, concatMap, delay, finalize, first, fromEvent, iif, interval, map, mergeMap, Observable, of, onErrorResumeNext, retry, retryWhen, scan, startWith, Subject, switchMap, take, takeUntil, takeWhile, tap, throttleTime, throwError, timer, withLatestFrom } from 'rxjs';
+import { catchError, concatMap, delay, filter, generate, interval, map, Observable, of, scan, startWith, switchMap, tap, throwError, timer } from 'rxjs';
 
 interface ClickEvent {
   x: number;
@@ -23,18 +23,23 @@ interface CombinedEvent {
 })
 export class AppComponent implements OnInit {
   //task 1
-  // public source$!: Observable<number>;
+  public source$!: Observable<string>;
+  public testString: string = 'test';
 
-  // ngOnInit(): void {
-  //   this.source$ = interval(1000).pipe(
-  //     map(value => value + 1),
-  //     switchMap(value =>
-  //       interval(value % 2 === 0 ? 500 : 1000).pipe(map(() => value))
-  //     )
-  //   );
+  ngOnInit(): void {
+    this.source$ = interval(1000).pipe(
+      switchMap((value) => {
+        if (value % 2 === 0) {
+          return timer(0, 500).pipe(map(() => this.testString + value));
+        } else {
+          return timer(500, 500).pipe(map(() => this.testString + value));
+        }
+      })
+    );
 
-  //   this.source$.subscribe(value => console.log(value));
-  // }
+    this.source$.subscribe((res)=>console.log(res));
+  }
+}
 
 
 
@@ -91,18 +96,18 @@ export class AppComponent implements OnInit {
   // }
 
   //task 4
-//   result$!: Observable<string>;
+  //   result$!: Observable<string>;
 
-//   ngOnInit(): void {
-//     this.result$ = fromEvent<MouseEvent>(document, 'click').pipe(
-//       throttleTime(2000), 
-//       switchMap(() => timer(0, 2000).pipe( 
-//         takeUntil(timer(5000)) 
-//       )),
-//       map(() => `Клик зарегистрирован в ${new Date().toLocaleTimeString()}`), 
-//       startWith('Ожидание кликов...') 
-//     );
-//   }
-// }
+  //   ngOnInit(): void {
+  //     this.result$ = fromEvent<MouseEvent>(document, 'click').pipe(
+  //       throttleTime(2000), 
+  //       switchMap(() => timer(0, 2000).pipe( 
+  //         takeUntil(timer(5000)) 
+  //       )),
+  //       map(() => `Клик зарегистрирован в ${new Date().toLocaleTimeString()}`), 
+  //       startWith('Ожидание кликов...') 
+  //     );
+  //   }
+  // }
 
 
